@@ -51,6 +51,8 @@
           (click)="onCommit()"
           (keydown.enter)="onCommit()"
         >
+
+         <!-- TODO    make it track not "pokemon" but "pokemon.id" or something unique -->
           @for (pokemon of pokemonList(); track pokemon) {
             <div class="option" ngOption [value]="pokemon" [label]="pokemon">
               <span class="option-label">{{ pokemon }}</span>

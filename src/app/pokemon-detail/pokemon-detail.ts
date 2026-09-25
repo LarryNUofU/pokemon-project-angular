@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   imports: [],
@@ -10,10 +11,12 @@ import { Component } from '@angular/core';
 export class PokemonDetail {
 
 
+  pokemonName = signal(0);
 
 
-  setPageDetail(pokemonName: string) {
-    console.log("this is being called: " + pokemonName);
+  setPageDetail(pokemonId: number) {
+    console.log("this is being called: " + pokemonId);
+    this.pokemonName.set(pokemonId);
   }
 
 
