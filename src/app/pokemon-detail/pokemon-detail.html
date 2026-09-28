@@ -1,5 +1,9 @@
 <h2> {{ pokemon()?.displayName }}</h2>
-<img src={{pokemon()?.sprites.front_default}}>
+<img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_default" />
+<!-- @if (pokemon()?.isGrassType()) { -->
+<h3>Shiny</h3>
+<img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_shiny" />
+<!---} -->
 <h3>Height: {{ pokemon()?.heightInMeters }}m</h3>
 <h3>Abilities</h3>
 <ul>

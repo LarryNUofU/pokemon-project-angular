@@ -12,8 +12,17 @@ export interface PokemonSprites {
 	back_default: string | null;
 	front_shiny: string | null;
 	back_shiny: string | null;
-	other?: Record<string, unknown>;
+	other?: Other;
 	versions?: Record<string, unknown>;
+}
+
+export interface Other {
+    "official-artwork": OfficialArtworkSprites;
+}
+
+export interface OfficialArtworkSprites {
+    front_default: string | null;
+    front_shiny: string | null;
 }
 
 export interface PokemonApiResponse {
@@ -23,6 +32,17 @@ export interface PokemonApiResponse {
 	weight: number;
 	abilities: PokemonAbility[];
 	sprites: PokemonSprites;
+    types: PokemonTypes[];
+}
+
+export interface PokemonTypes {
+    "slot": number,
+    "type": PokemonType
+}
+
+export interface PokemonType {
+    name: string,
+    url: string
 }
 
 export class PokemonModel {
@@ -32,6 +52,7 @@ export class PokemonModel {
 	readonly weight: number;
 	readonly abilities: PokemonAbility[];
 	readonly sprites: PokemonSprites;
+    readonly types: PokemonTypes[];
 
     readonly displayName: string;
 
@@ -42,6 +63,7 @@ export class PokemonModel {
 		this.weight = response.weight;
 		this.abilities = response.abilities;
 		this.sprites = response.sprites;
+        this.types = response.types;
 
         this.displayName = this.name.charAt(0).toUpperCase() + this.name.slice(1);
 	}
@@ -49,6 +71,16 @@ export class PokemonModel {
 
     private getHeightInMeters(height: number): number {
         return height / 10;
+    }
+
+    isGrassType(): boolean {
+        let isGrass = false;
+        this.types.forEach(type => {
+            if (type.type.name === "grass") {
+                isGrass = true;
+            }
+        })
+        return isGrass;
     }
 
 }
