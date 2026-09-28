@@ -28,7 +28,7 @@ export interface PokemonApiResponse {
 export class PokemonModel {
 	readonly id: number;
 	readonly name: string;
-	readonly height: number;
+	readonly heightInMeters: number;
 	readonly weight: number;
 	readonly abilities: PokemonAbility[];
 	readonly sprites: PokemonSprites;
@@ -38,11 +38,17 @@ export class PokemonModel {
 	constructor(response: PokemonApiResponse) {
 		this.id = response.id;
 		this.name = response.name;
-		this.height = response.height;
+		this.heightInMeters = this.getHeightInMeters(response.height);
 		this.weight = response.weight;
 		this.abilities = response.abilities;
 		this.sprites = response.sprites;
 
         this.displayName = this.name.charAt(0).toUpperCase() + this.name.slice(1);
 	}
+
+
+    private getHeightInMeters(height: number): number {
+        return height / 10;
+    }
+
 }
