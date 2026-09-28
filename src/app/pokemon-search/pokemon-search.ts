@@ -5,6 +5,10 @@ import {afterRenderEffect, Component, computed, inject, signal, viewChild} from 
 import {FormsModule} from '@angular/forms';
 import { PokemonDetail } from '../pokemon-detail/pokemon-detail';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
+import { PokemonCache } from '../pokemon-cache';
 
 
 @Component({
@@ -34,17 +38,35 @@ export class PokemonSearch {
   query = signal('');
   selectedOption = signal<string[]>([]);
 
+
+  pokemonCache = inject(PokemonCache);
+
   pokemonDetail = viewChild(PokemonDetail);
 
 
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
 
+//   private pokemonNames = signal([
+//   'Pikachu',
+//   'Snorlax',
+//   'Charmander',
+// ]);
 
-  private pokemonId = 1;
+private pokemonNamesArr: string[] = [];
+
+
+
+  //Angular HTTP service guide: https://angular.dev/guide/http/setup
+  private httpClient = inject(HttpClient);
+
+
+
+
+  private pokemonId: number = -1;
 
   pokemonList = computed(() =>
-    ALL_POKEMON.filter((pokemonName) => pokemonName.toLowerCase().startsWith(this.query().toLowerCase())),
+    this.pokemonNamesArr.filter((pokemonName) => pokemonName.toLowerCase().startsWith(this.query().toLowerCase())),
   );
 
    constructor() {
@@ -55,12 +77,26 @@ export class PokemonSearch {
       });
 
 
+
+      this.pokemonNamesArr = [...this.pokemonCache.allValidPokemonNameToIdMap.keys()].sort().map((val) => {
+        return val.charAt(0).toUpperCase() + val.slice(1);
+      });
+      
+
+
+
+
      this.activatedRoute.queryParams.subscribe((params) => {
-      this.pokemonId = params['id'] || '';
+      this.pokemonId = parseInt(params['id'] || '');
       console.log('pokemon ID:', this.pokemonId);
 
+      if (!this.pokemonCache.checkIfValidId(this.pokemonId)) {
+          console.log("not valid id:" + this.pokemonId);
+          this.pokemonId = -1;
+      }
+
       let validId = false;
-      if (!(this.pokemonId == 123)) {
+      if (this.pokemonId == -1) {
           this.router.navigate([], {
             queryParams: {},
             replaceUrl: true // Optional: Replaces the current history entry instead of adding a new one
@@ -69,10 +105,14 @@ export class PokemonSearch {
       }
       else {
         //child might not be rendered yet when it gets here after loading in from outside the route or if page is refreshed/URL changed from outside. This case is handled in ngAfterViewInit()
-        this.pokemonDetail()?.setPageDetail(this.pokemonId);
-      }
-      
 
+        //TODO: check if in cache, otherwise call the API here
+          this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + this.pokemonId).subscribe((value) => {
+            const pokemon = new PokemonModel(value);
+            this.pokemonDetail()?.setPageDetail(pokemon);
+            console.log(pokemon);
+        });
+      }
     });
 
   }
@@ -80,10 +120,18 @@ export class PokemonSearch {
 
 
   ngAfterViewInit() {
-      if (this.pokemonId == 123) {
-        this.pokemonDetail()?.setPageDetail(this.pokemonId);
-      }
+      
+    if (this.pokemonId != -1) {
+        this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + this.pokemonId).subscribe((value) => {
+        const pokemon = new PokemonModel(value);
+        console.log(pokemon);
+        this.pokemonDetail()?.setPageDetail(pokemon);
+      });
+
+    }
+
   }
+
 
 
   onCommit() {
@@ -93,7 +141,7 @@ export class PokemonSearch {
       //Only call Pokemon detail to render itself when the user presses enter or finishes clicking an option in the dropdown
       //probably need to clear out query params
       //this.pokemonDetail()?.setPageDetail(selected[0]);
-      const id = 123;
+      const id = this.pokemonCache.allValidPokemonNameToIdMap.get(selected[0].toLowerCase());
       this.router.navigate([], {
       queryParams: {id},
       queryParamsHandling: 'merge', // Preserve other query parameters
@@ -107,8 +155,8 @@ export class PokemonSearch {
 
 }
 
-const ALL_POKEMON = [
-  'Pikachu',
-  'Snorlax',
-  'Charmander'
-];
+// const ALL_POKEMON = [
+//   'Pikachu',
+//   'Snorlax',
+//   'Charmander'
+// ];
