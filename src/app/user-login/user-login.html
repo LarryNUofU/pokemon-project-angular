@@ -1,0 +1,6 @@
+<p>user-login works!</p>
+<form [formGroup]="applyForm" (submit)="submitForm()">
+          <label for="first-name">Username</label>
+          <input id="first-name" type="text" formControlName="username" />
+          <button type="submit" class="primary">Change User</button>
+</form>
