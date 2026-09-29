@@ -25,8 +25,8 @@ export class PokemonCache {
     readonly allValidPokemonNameToIdMap: Map<string, number> = new Map();
     readonly allValidPokemonIds = new Set<number>();
 
-
     private readonly MAX_POKEMON_ID = 1026;
+
 
 
 
