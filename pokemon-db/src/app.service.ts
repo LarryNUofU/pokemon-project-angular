@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseSync } from 'node:sqlite';
+import Database from 'better-sqlite3';
 
 @Injectable()
 export class DatabaseService {
@@ -15,13 +15,14 @@ export class DatabaseService {
 
 
   getHello(): string {
-    return 'Hello World!!!';
+    return 'Hello World!!!!!!!';
   }
 
 
 
 initializeDatabase() {
-  const database = new DatabaseSync('pokemon.db');
+  const database = new Database('pokemon.db');
+  database.pragma('journal_mode = WAL');
 
     database.exec(`
       CREATE TABLE IF NOT EXISTS data (
