@@ -23,9 +23,13 @@ export class PokemonCache {
     readonly pokemonCache = new Map<number, PokemonModel>();
 
     readonly allValidPokemonNameToIdMap: Map<string, number> = new Map();
+    readonly allValidPokemonIdToNameMap: Map<number, string> = new Map();
+
     readonly allValidPokemonIds = new Set<number>();
 
     private readonly MAX_POKEMON_ID = 1026;
+
+    private readonly generationMapToIdList: Map<string, number[]> = new Map();
 
 
 
@@ -48,6 +52,7 @@ export class PokemonCache {
         resultsObj.results.forEach((item) => {
             const id = this.getIdFromUrl(item.url);
             this.allValidPokemonNameToIdMap.set(item.name, id);
+            this.allValidPokemonIdToNameMap.set(id, item.name);
             if (id > 0) {
                 this.allValidPokemonIds.add(id);
             }
@@ -58,4 +63,12 @@ export class PokemonCache {
     checkIfValidId(id: number): boolean {
         return (typeof id == "number" && id > 0 && id <= this.MAX_POKEMON_ID);
     }
+
+
+    addToGenerationMap(key: string, value: number[]): void {
+        this.generationMapToIdList.set(key, value);
+        console.log(this.generationMapToIdList);
+    }
+
+
 }

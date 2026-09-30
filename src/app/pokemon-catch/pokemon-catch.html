@@ -7,6 +7,21 @@
 <button type="button" (click)="catchPokemon(7)">Catch Pokémon from Gen VII</button>
 <button type="button" (click)="catchPokemon(8)">Catch Pokémon from Gen VIII</button>
 <button type="button" (click)="catchPokemon(9)">Catch Pokémon from Gen IX</button>
+<h1> Pokemon Caught!</h1>
+<h2> {{ pokemon()?.displayName }}</h2>
+<img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_default" />
+<!-- @if (pokemon()?.isGrassType()) { -->
+<!-- <h3>Shiny</h3>
+<img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_shiny" />
+<!---} -->
+<h3>Height: {{ pokemon()?.heightInMeters }}m</h3>
+<h3>Abilities</h3>
+<ul>
+@for (entry of pokemon()?.abilities ?? []; track entry.slot) {
+  <li>{{ entry.ability.name }}</li>
+}
+</ul>
+
 
 
 

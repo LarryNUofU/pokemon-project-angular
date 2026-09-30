@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { PokemonCache } from '../pokemon-cache';
 import { HttpClient } from '@angular/common/http';
-import { PokemonApiResponse } from '../pokemon-model';
+import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
 import { PokemonGenerationApiResponse, PokemonGenerationModel } from '../pokemon-generation-model';
 
 @Component({
@@ -15,6 +15,20 @@ export class PokemonCatch {
 
   pokemonCache = inject(PokemonCache);
   httpClient = inject(HttpClient);
+
+  // pokemonName = signal("");
+  // pokemonId = signal(0);
+
+
+  pokemon = signal<PokemonModel | null>(null);
+
+
+
+
+  private getIdFromUrl(url: string): number {
+        const match = url.match(/\/(\d+)\/?$/);
+        return match ? Number(match[1]) : -1;
+  }
 
 
 
@@ -30,16 +44,38 @@ export class PokemonCatch {
         console.log(pokemonGeneration);
 
         let genName = pokemonGeneration.name;
-        let nameArr = [];
+        let idArr: number[] = [];
 
         pokemonGeneration.pokemonSpecies.forEach((species) => {
-          nameArr.push(species.name);
-        })
+          idArr.push(this.getIdFromUrl(species.url));
+        });
+
+        this.pokemonCache.addToGenerationMap(genName, idArr);
+
+        let chosenId = this.choosePokemon(idArr);
+        // this.pokemonId.set(chosenId);
+        // this.pokemonName.set(this.pokemonCache.allValidPokemonIdToNameMap.get(chosenId) ?? "");
 
 
+        //check if pokemon is in the cache
+
+        this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + chosenId).subscribe((value) => {
+            this.pokemon.set(new PokemonModel(value));
+        }); 
 
 
 
     });
+
+
+
+  }
+
+
+  choosePokemon(list: number[]): number {
+
+      let max = list.length - 1;
+      let min = 0;
+      return list[Math.floor(Math.random() * (max - min + 1)) + min];
   }
 }
