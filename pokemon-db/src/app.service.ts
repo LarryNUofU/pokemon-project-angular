@@ -5,6 +5,9 @@ import Database from 'better-sqlite3';
 export class DatabaseService {
 
 
+
+  private database = new Database('pokemon.db');
+
   
   constructor() {
     this.initializeDatabase();
@@ -19,29 +22,83 @@ export class DatabaseService {
   }
 
 
+  addUser(usernameValue: string): boolean {
+
+
+
+    const checkUsernameExistsQuery = this.database.prepare(`
+      SELECT * FROM users
+      WHERE username = ?
+      `);
+
+
+      let queryRes = checkUsernameExistsQuery.get(usernameValue);
+
+      if (!queryRes) {
+          try {
+            //add user
+            const addUserRes = this.database
+            .prepare('INSERT INTO users (username) VALUES (?)')
+            .run(usernameValue);
+          }
+          catch (error) {
+            console.error("could not add user");
+            return false;
+          }
+      }
+
+      return true;
+
+
+
+  }
+
+
+  getPokemon(usernameValue: string) {
+    const getPokemonQuery = this.database.prepare(`
+      SELECT * FROM pokemon
+      WHERE username = ?
+      `);
+
+      const pokemonQueryRes = getPokemonQuery.all(usernameValue);
+
+
+
+      return pokemonQueryRes;
+  }
+
+
+  addPokemon(usernameValue: string) {
+
+  }
+
+
+
+
+
+
 
 initializeDatabase() {
-  const database = new Database('pokemon.db');
-  database.pragma('journal_mode = WAL');
+  this.database.pragma('journal_mode = WAL');
 
-    database.exec(`
+    this.database.exec(`
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY,
-        username TEXT
+        username TEXT UNIQUE
       ) STRICT
     `);
 
 
-    database.exec(`
+    this.database.exec(`
       CREATE TABLE IF NOT EXISTS pokemon (
         id INTEGER PRIMARY KEY,
-        username TEXT REFERENCES users(username),
-        speciesId INTEGER,
-        pokemonName TEXT
+        username TEXT NOT NULL REFERENCES users(username),
+        speciesId INTEGER NOT NULL,
+        pokemonName TEXT NOT NULL
       ) STRICT
     `);
 
-    const query = database.prepare('SELECT * FROM users ORDER BY id');
+    const query = this.database.prepare('SELECT * FROM users ORDER BY id');
     console.log(query.all());
 
 }
