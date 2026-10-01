@@ -3,6 +3,8 @@ import { PokemonCache } from '../pokemon-cache';
 import { HttpClient } from '@angular/common/http';
 import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
 import { PokemonGenerationApiResponse, PokemonGenerationModel } from '../pokemon-generation-model';
+import { PokemonDatabase, PokemonDatabaseModelPost } from '../pokemon-database';
+import { AuthService } from '../auth-service';
 
 @Component({
   imports: [],
@@ -15,6 +17,8 @@ export class PokemonCatch {
 
   pokemonCache = inject(PokemonCache);
   httpClient = inject(HttpClient);
+  databaseService = inject(PokemonDatabase);
+  authService = inject(AuthService);
 
   // pokemonName = signal("");
   // pokemonId = signal(0);
@@ -52,6 +56,7 @@ export class PokemonCatch {
 
         this.pokemonCache.addToGenerationMap(genName, idArr);
 
+
         let chosenId = this.choosePokemon(idArr);
         // this.pokemonId.set(chosenId);
         // this.pokemonName.set(this.pokemonCache.allValidPokemonIdToNameMap.get(chosenId) ?? "");
@@ -59,11 +64,27 @@ export class PokemonCatch {
 
         //check if pokemon is in the cache
 
+
+        //else
         this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + chosenId).subscribe((value) => {
             this.pokemon.set(new PokemonModel(value));
-        }); 
+              //Add pokemon
+
+              const sqliteTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+              let postObj: PokemonDatabaseModelPost = {
+                username: this.authService.getCurrentUsername(),
+                speciesId: this.pokemon()?.id,
+                pokemonName: this.pokemon()?.displayName,
+                date: sqliteTimestamp
+              }
 
 
+              console.log("adding pokemon");
+              console.log(postObj);
+
+              this.databaseService.addPokemon(postObj);
+              });
 
     });
 

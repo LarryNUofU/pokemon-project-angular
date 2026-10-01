@@ -18,4 +18,12 @@ describe('PokemonStorage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should store Pokémon IDs in a number array signal', () => {
+    expect(component.items()).toEqual([]);
+
+    component.items.set([1, 25, 150]);
+
+    expect(component.items()).toEqual([1, 25, 150]);
+  });
 });

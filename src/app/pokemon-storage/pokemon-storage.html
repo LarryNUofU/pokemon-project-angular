@@ -1,1 +1,8 @@
-<p>pokemon-storage works!</p>
+<ul>
+
+    @for (item of databaseService.pokemonList(); track $index) {
+        <li>{{item.pokemonName}} - Caught at: {{ item.date }}</li>
+    }
+
+
+</ul>

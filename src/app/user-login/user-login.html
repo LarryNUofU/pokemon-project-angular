@@ -1,4 +1,4 @@
-<p>user-login works!</p>
+<p>Current User: {{ this.authService.getCurrentUsername()}}</p>
 <form [formGroup]="applyForm" (submit)="submitForm()">
           <label for="first-name">Username</label>
           <input id="first-name" type="text" formControlName="username" />

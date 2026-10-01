@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Database from 'better-sqlite3';
+import { AddPokemonDto } from './app.controller.js';
 
 @Injectable()
 export class DatabaseService {
@@ -68,9 +69,16 @@ export class DatabaseService {
   }
 
 
-  addPokemon(usernameValue: string) {
+  addPokemon(addPokemon: AddPokemonDto) {
 
+    const addPokemonQuery = this.database.prepare(`
+      INSERT INTO pokemon (username, speciesId, pokemonName, date)
+      VALUES(?, ?, ?, ?)`).run(addPokemon.username, addPokemon.speciesId, addPokemon.pokemonName, addPokemon.date);
   }
+
+
+
+
 
 
 
@@ -94,7 +102,8 @@ initializeDatabase() {
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL REFERENCES users(username),
         speciesId INTEGER NOT NULL,
-        pokemonName TEXT NOT NULL
+        pokemonName TEXT NOT NULL,
+        date TEXT NOT NULL
       ) STRICT
     `);
 
@@ -102,8 +111,6 @@ initializeDatabase() {
     console.log(query.all());
 
 }
-
-
 
 
 }

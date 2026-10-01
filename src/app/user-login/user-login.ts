@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { AuthService } from '../auth-service';
 import { Router } from '@angular/router';
+import { PokemonDatabase } from '../pokemon-database';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -18,6 +19,8 @@ export class UserLogin {
 
     authService = inject(AuthService);
     router = inject(Router);
+    databaseService = inject(PokemonDatabase);
+
 
 
 
@@ -34,6 +37,9 @@ export class UserLogin {
   submitForm() {
     let name = this.applyForm.value.username ?? '';
     this.authService.setUsername(name);
+
+    this.databaseService.loadPokemon(name);
+
     console.log(name);
     this.router.navigate(['/home']);
   }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { PokemonDatabase } from '../pokemon-database';
 
 @Component({
   imports: [],
@@ -8,23 +9,11 @@ import { Component } from '@angular/core';
 })
 export class PokemonStorage {
 
+  //items = signal<number[]>([]);
+  databaseService = inject(PokemonDatabase);
 
 
-
-    loadPokemonIntoStorage(username: string) {
-      
-
-
-
-
-
-
-
-
-    }
-
-
-
+  
 
 
 
