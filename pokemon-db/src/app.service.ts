@@ -25,13 +25,23 @@ initializeDatabase() {
   database.pragma('journal_mode = WAL');
 
     database.exec(`
-      CREATE TABLE IF NOT EXISTS data (
-        key INTEGER PRIMARY KEY,
-        value TEXT
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY,
+        username TEXT
       ) STRICT
     `);
 
-    const query = database.prepare('SELECT * FROM data ORDER BY key');
+
+    database.exec(`
+      CREATE TABLE IF NOT EXISTS pokemon (
+        id INTEGER PRIMARY KEY,
+        username TEXT REFERENCES users(username),
+        speciesId INTEGER,
+        pokemonName TEXT
+      ) STRICT
+    `);
+
+    const query = database.prepare('SELECT * FROM users ORDER BY id');
     console.log(query.all());
 
 }
