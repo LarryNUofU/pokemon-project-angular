@@ -1,0 +1,23 @@
+.title {
+    margin-top: 50px;
+}
+
+
+.artwork-gallery {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.artwork-gallery figure {
+  flex: 1 1 250px;
+  margin: 0;
+  text-align: center;
+}
+
+.artwork-gallery img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
