@@ -129,6 +129,9 @@ private pokemonNamesArr: string[] = [];
       });
 
     }
+    else {
+      this.combobox()?.element.focus();
+    }
 
   }
 
@@ -150,6 +153,8 @@ private pokemonNamesArr: string[] = [];
     this.popupExpanded.set(false);
     this.combobox()?.element.focus();
   }
+
+
 
 
 
