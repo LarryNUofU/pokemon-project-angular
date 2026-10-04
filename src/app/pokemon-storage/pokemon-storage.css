@@ -1,0 +1,28 @@
+.flex-container {
+  display: flex;       /* Turns the container into a flexbox row */
+  gap: 20px;           /* Adds space between the columns */
+}
+
+.collection-list {
+  flex: 1;             /* Tells both columns to grow equally (50% width each) */
+  padding: 15px;
+}
+
+.pokemon-description {
+  flex: 2;             /* Tells both columns to grow equally (50% width each) */
+  padding: 15px;
+}
+
+
+.list-group-item.active {
+  --bs-list-group-active-bg: #198754;
+  --bs-list-group-active-border-color: #198754;
+  --bs-list-group-active-color: #fff;
+}
+
+/* Optional: Stack columns vertically on mobile screens */
+@media (max-width: 600px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}

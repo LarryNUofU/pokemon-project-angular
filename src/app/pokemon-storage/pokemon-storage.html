@@ -1,8 +1,20 @@
-<ul>
-
-    @for (item of databaseService.pokemonList(); track $index) {
-        <li>{{item.pokemonName}} - Caught at: {{ item.date }}</li>
-    }
 
 
-</ul>
+<div class="flex-container">
+  <div class="collection-list">
+    <!-- <ul>
+        @for (item of databaseService.pokemonList(); track $index) {
+            <li class="list-group-item">{{item.pokemonName}} - Caught at: {{ item.date }}</li>
+        }
+    </ul> -->
+  <div class="list-group">
+  @for (item of databaseService.pokemonList(); track $index) {
+        <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedButton() === $index" (click)="selectedButton.set($index); onSelect(item.speciesId); ">{{item.pokemonName}} - Caught at: {{ item.date }}</button>
+  }
+  </div>
+
+  </div>
+  <div class="pokemon-description">
+    <app-pokemon-collection-detail></app-pokemon-collection-detail>
+  </div>
+</div>

@@ -1,19 +1,41 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { PokemonDatabase } from '../pokemon-database';
+import { HttpClient } from '@angular/common/http';
+import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
+import { PokemonCollectionDetail } from '../pokemon-collection-detail/pokemon-collection-detail';
 
 @Component({
-  imports: [],
+  imports: [PokemonCollectionDetail],
   selector: 'app-pokemon-storage',
   styleUrl: './pokemon-storage.css',
   templateUrl: './pokemon-storage.html',
 })
 export class PokemonStorage {
 
-  //items = signal<number[]>([]);
   databaseService = inject(PokemonDatabase);
+  readonly selectedButton = signal(-1);
+  httpClient = inject(HttpClient);
 
 
-  
+
+  pokemonCollectionDetail = viewChild(PokemonCollectionDetail);
+
+
+  onSelect(speciesId: number) {
+    console.log("i've been selected: " + speciesId);
+
+    this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + speciesId).subscribe((value) => {
+        const pokemon = new PokemonModel(value);
+        console.log(pokemon);
+        this.pokemonCollectionDetail()?.setPageDetail(pokemon);
+      });
+
+
+  }
+
+
+
+
 
 
 

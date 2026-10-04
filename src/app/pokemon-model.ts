@@ -55,6 +55,8 @@ export class PokemonModel {
     readonly types: PokemonTypes[];
 
     readonly displayName: string;
+	readonly nickname: string | null;
+	readonly flavorText: string | null;
 
 	constructor(response: PokemonApiResponse) {
 		this.id = response.id;
@@ -66,6 +68,8 @@ export class PokemonModel {
         this.types = response.types;
 
         this.displayName = this.name.charAt(0).toUpperCase() + this.name.slice(1);
+		this.nickname = null;
+		this.flavorText = null;
 	}
 
 
