@@ -4,12 +4,14 @@
 }
 
 .collection-list {
-  flex: 1;             /* Tells both columns to grow equally (50% width each) */
+  flex: 1;            
   padding: 15px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .pokemon-description {
-  flex: 2;             /* Tells both columns to grow equally (50% width each) */
+  flex: 2;             
   padding: 15px;
 }
 

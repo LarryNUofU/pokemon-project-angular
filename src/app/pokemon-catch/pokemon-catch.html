@@ -1,12 +1,15 @@
-<button type="button" (click)="catchPokemon(1)">Catch Pokémon from Gen I</button>
-<button type="button" (click)="catchPokemon(2)">Catch Pokémon from Gen II</button>
-<button type="button" (click)="catchPokemon(3)">Catch Pokémon from Gen III</button>
-<button type="button" (click)="catchPokemon(4)">Catch Pokémon from Gen IV</button>
-<button type="button" (click)="catchPokemon(5)">Catch Pokémon from Gen V</button>
-<button type="button" (click)="catchPokemon(6)">Catch Pokémon from Gen VI</button>
-<button type="button" (click)="catchPokemon(7)">Catch Pokémon from Gen VII</button>
-<button type="button" (click)="catchPokemon(8)">Catch Pokémon from Gen VIII</button>
-<button type="button" (click)="catchPokemon(9)">Catch Pokémon from Gen IX</button>
+<h1>Choose a region:</h1>
+<div class="buttonsRow">
+    <button class="genButton" [ngClass]="buttonClasses(1)" type="button" (click)="catchPokemon(1)">Generation I</button>
+    <button class="genButton" [ngClass]="buttonClasses(2)" type="button" (click)="catchPokemon(2)">Generation II</button>
+    <button class="genButton" [ngClass]="buttonClasses(3)" type="button" (click)="catchPokemon(3)">Generation III</button>
+    <button class="genButton" [ngClass]="buttonClasses(4)" type="button" (click)="catchPokemon(4)">Generation IV</button>
+    <button class="genButton" [ngClass]="buttonClasses(5)" type="button" (click)="catchPokemon(5)">Generation V</button>
+    <button class="genButton" [ngClass]="buttonClasses(6)" type="button" (click)="catchPokemon(6)">Generation VI</button>
+    <button class="genButton" [ngClass]="buttonClasses(7)" type="button" (click)="catchPokemon(7)">Generation VII</button>
+    <button class="genButton" [ngClass]="buttonClasses(8)" type="button" (click)="catchPokemon(8)">Generation VIII</button>
+    <button class="genButton" [ngClass]="buttonClasses(9)" type="button" (click)="catchPokemon(9)">Generation IX</button>
+</div>
 <h1> Pokemon Caught!</h1>
 <h2> {{ pokemon()?.displayName }}</h2>
 <img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_default" />

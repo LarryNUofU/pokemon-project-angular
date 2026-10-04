@@ -5,9 +5,10 @@ import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
 import { PokemonGenerationApiResponse, PokemonGenerationModel } from '../pokemon-generation-model';
 import { PokemonDatabase, PokemonDatabaseModelPost } from '../pokemon-database';
 import { AuthService } from '../auth-service';
+import { NgClass } from '@angular/common';
 
 @Component({
-  imports: [],
+  imports: [NgClass],
   selector: 'app-pokemon-catch',
   styleUrl: './pokemon-catch.css',
   templateUrl: './pokemon-catch.html',
@@ -27,6 +28,9 @@ export class PokemonCatch {
   pokemon = signal<PokemonModel | null>(null);
 
 
+  selectedGeneration = signal<number | null>(null);
+
+
 
 
   private getIdFromUrl(url: string): number {
@@ -38,6 +42,8 @@ export class PokemonCatch {
 
   catchPokemon(id: number): void {
     // console.log('Pokemon caught!');
+
+    this.selectedGeneration.set(id);
 
 
     //check if generation object is in cache
@@ -98,5 +104,27 @@ export class PokemonCatch {
       let max = list.length - 1;
       let min = 0;
       return list[Math.floor(Math.random() * (max - min + 1)) + min];
+  }
+
+
+
+  buttonClasses(id: number) {
+
+    if (id != this.selectedGeneration()) {
+      return {};
+    }
+    else {
+        return {
+        gen1: this.selectedGeneration() === 1,
+        gen2: this.selectedGeneration() === 2,
+        gen3: this.selectedGeneration() === 3,
+        gen4: this.selectedGeneration() === 4,
+        gen5: this.selectedGeneration() === 5,
+        gen6: this.selectedGeneration() === 6,
+        gen7: this.selectedGeneration() === 7,
+        gen8: this.selectedGeneration() === 8,
+        gen9: this.selectedGeneration() === 9,
+      };
+    }
   }
 }

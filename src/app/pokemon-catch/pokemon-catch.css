@@ -1,0 +1,37 @@
+.buttonsRow {
+    display: flex;
+}
+
+
+.genButton {
+    border-radius: 10px;
+}
+
+.gen1 {
+    background-color: lightblue;
+}
+.gen2 {
+    background-color: green;
+}
+.gen3 {
+    background-color: black;
+}
+.gen4 {
+    background-color: lightblue;
+}
+.gen5 {
+    background-color: lightblue;
+}
+.gen1 {
+    background-color: lightblue;
+}
+.gen1 {
+    background-color: lightblue;
+}
+.gen1 {
+    background-color: lightblue;
+}
+.gen1 {
+    background-color: lightblue;
+}
+
