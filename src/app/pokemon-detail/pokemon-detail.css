@@ -3,6 +3,11 @@
 }
 
 
+.description-button {
+  margin-top: 50px;
+}
+
+
 .artwork-gallery {
   display: flex;
   gap: 1rem;
