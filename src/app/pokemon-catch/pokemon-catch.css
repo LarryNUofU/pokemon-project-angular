@@ -3,35 +3,64 @@
 }
 
 
+
+.title {
+    margin-top: 30px;
+}
+.contentTitle {
+    margin-bottom: 40px;
+}
+
 .genButton {
     border-radius: 10px;
 }
-
 .gen1 {
-    background-color: lightblue;
+    background-color: lavender;
 }
 .gen2 {
-    background-color: green;
+    background-color: yellow;
 }
 .gen3 {
-    background-color: black;
+    background-color: #DC143C;
 }
 .gen4 {
-    background-color: lightblue;
+    background-color: green;
 }
 .gen5 {
-    background-color: lightblue;
+    background-color: lightgrey;
 }
-.gen1 {
-    background-color: lightblue;
+.gen6 {
+    background-color: burlywood;
 }
-.gen1 {
-    background-color: lightblue;
+.gen7 {
+    background-color: #1ed2ff;
 }
-.gen1 {
-    background-color: lightblue;
+.gen8 {
+    background-color: #012169;
 }
-.gen1 {
-    background-color: lightblue;
+.gen9 {
+    background-color: #ffd580;
 }
+
+.mainBody {
+  display: flex;
+  justify-content: center;
+  padding: 5rem;
+  background-color: var(--content-background-color);
+  align-items: flex-start;
+  min-height: 88vh;
+  background-image: var(--bs-gradient);
+}
+
+.contentBody {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border: 4px outset black;
+    border-radius: 30px;
+    background-color: white;
+}
+
+
 

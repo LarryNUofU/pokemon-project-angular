@@ -127,4 +127,33 @@ export class PokemonCatch {
       };
     }
   }
+
+  backgroundColor() {
+      switch (this.selectedGeneration()) {
+        case 1: 
+            return "lavender"; 
+        case 2:
+            return "yellow";  
+        case 3:
+            return "#DC143C";  
+        case 4:
+          return "green";  
+        case 5:
+          return "lightgrey";  
+        case 6:
+          return "burlywood";  
+        case 7:
+          return "#1ed2ff";  
+        case 8:
+          return "#012169";  
+        case 9:
+          return "#ffd580";  
+        default:
+            return "";
+      }
+  }
+
+
+
+
 }

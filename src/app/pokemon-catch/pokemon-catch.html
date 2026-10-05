@@ -1,4 +1,4 @@
-<h1>Choose a region:</h1>
+<h1 class="title">Click A Region to Catch:</h1>
 <div class="buttonsRow">
     <button class="genButton" [ngClass]="buttonClasses(1)" type="button" (click)="catchPokemon(1)">Generation I</button>
     <button class="genButton" [ngClass]="buttonClasses(2)" type="button" (click)="catchPokemon(2)">Generation II</button>
@@ -10,20 +10,18 @@
     <button class="genButton" [ngClass]="buttonClasses(8)" type="button" (click)="catchPokemon(8)">Generation VIII</button>
     <button class="genButton" [ngClass]="buttonClasses(9)" type="button" (click)="catchPokemon(9)">Generation IX</button>
 </div>
-<h1> Pokemon Caught!</h1>
-<h2> {{ pokemon()?.displayName }}</h2>
-<img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_default" />
-<!-- @if (pokemon()?.isGrassType()) { -->
-<!-- <h3>Shiny</h3>
-<img [src]="pokemon()?.sprites.other?.['official-artwork']?.front_shiny" />
-<!---} -->
-<h3>Height: {{ pokemon()?.heightInMeters }}m</h3>
-<h3>Abilities</h3>
-<ul>
-@for (entry of pokemon()?.abilities ?? []; track entry.slot) {
-  <li>{{ entry.ability.name }}</li>
+
+@if (pokemon(); as pokemon) {
+<div class="mainBody" [style.--content-background-color]="backgroundColor()">
+  <div class="contentBody">
+    <h1 class="contentTitle"> Pokemon Caught!</h1>
+    <h2> {{ pokemon.displayName }}</h2>
+    <img [src]="pokemon.sprites.other?.['official-artwork']?.front_default" />
+  </div>
+</div>
 }
-</ul>
+
+
 
 
 
