@@ -3,12 +3,15 @@ import { PokemonCache } from '../pokemon-cache';
 import { HttpClient } from '@angular/common/http';
 import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
 import { PokemonGenerationApiResponse, PokemonGenerationModel } from '../pokemon-generation-model';
-import { PokemonDatabase, PokemonDatabaseModelPost } from '../pokemon-database';
+import { PokemonDatabase, PokemonDatabaseModelPost, UpdateLatestNicknameDto } from '../pokemon-database';
 import { AuthService } from '../auth-service';
 import { NgClass } from '@angular/common';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+
+
 
 @Component({
-  imports: [NgClass],
+  imports: [NgClass, ReactiveFormsModule],
   selector: 'app-pokemon-catch',
   styleUrl: './pokemon-catch.css',
   templateUrl: './pokemon-catch.html',
@@ -37,6 +40,11 @@ export class PokemonCatch {
         const match = url.match(/\/(\d+)\/?$/);
         return match ? Number(match[1]) : -1;
   }
+
+
+   applyForm = new FormGroup({
+      username: new FormControl(''),
+    });
 
 
 
@@ -151,6 +159,28 @@ export class PokemonCatch {
         default:
             return "";
       }
+  }
+
+
+
+  submitForm() {
+    let name = this.applyForm.value.username ?? '';
+
+    let postObj: UpdateLatestNicknameDto = {
+                username: this.authService.getCurrentUsername(),
+                nickname: name
+        }
+
+    this.databaseService.updateLatestNickname(postObj);
+
+
+    const pokemon = this.pokemon();
+    if (pokemon) {
+      pokemon.nickname = name;
+    }
+
+    this.applyForm.reset();
+
   }
 
 

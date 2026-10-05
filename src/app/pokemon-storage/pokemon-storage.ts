@@ -21,12 +21,12 @@ export class PokemonStorage {
   pokemonCollectionDetail = viewChild(PokemonCollectionDetail);
 
 
-  onSelect(speciesId: number) {
+  onSelect(speciesId: number, pokemonName: string) {
     console.log("i've been selected: " + speciesId);
 
     this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + speciesId).subscribe((value) => {
         const pokemon = new PokemonModel(value);
-        console.log(pokemon);
+        pokemon.nickname = pokemonName;
         this.pokemonCollectionDetail()?.setPageDetail(pokemon);
       });
 

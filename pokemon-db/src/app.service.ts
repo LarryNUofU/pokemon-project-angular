@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Database from 'better-sqlite3';
-import { AddPokemonDto } from './app.controller.js';
+import { AddPokemonDto, UpdateLatestNicknameDto } from './app.controller.js';
 
 @Injectable()
 export class DatabaseService {
@@ -24,9 +24,6 @@ export class DatabaseService {
 
 
   addUser(usernameValue: string): boolean {
-
-
-
     const checkUsernameExistsQuery = this.database.prepare(`
       SELECT * FROM users
       WHERE username = ?
@@ -63,24 +60,23 @@ export class DatabaseService {
 
       const pokemonQueryRes = getPokemonQuery.all(usernameValue);
 
-
-
       return pokemonQueryRes;
   }
 
 
   addPokemon(addPokemon: AddPokemonDto) {
-
     const addPokemonQuery = this.database.prepare(`
       INSERT INTO pokemon (username, speciesId, pokemonName, date)
       VALUES(?, ?, ?, ?)`).run(addPokemon.username, addPokemon.speciesId, addPokemon.pokemonName, addPokemon.date);
   }
 
 
-
-
-
-
+  updateLatestNickname(updateNickname: UpdateLatestNicknameDto) {
+     const addPokemonQuery = this.database.prepare(`
+      UPDATE pokemon
+      SET pokemonName = ?
+      WHERE id = (SELECT MAX(id) FROM pokemon WHERE username=?)`).run(updateNickname.nickname, updateNickname.username);
+  }
 
 
 

@@ -23,6 +23,11 @@ export interface PokemonDatabaseModelPost {
 }
 
 
+export interface UpdateLatestNicknameDto {
+  username: string;
+  nickname: string;
+}
+
 
 
 
@@ -54,6 +59,22 @@ export class PokemonDatabase {
                 this.loadPokemon(postObj.username);
             },
             error: (error) => console.error("failed to add pokemon")
+        });
+
+
+
+      
+
+    }
+
+
+    updateLatestNickname(postObj: UpdateLatestNicknameDto) {
+
+        this.httpClient.post('http://localhost:3000/update-latest-nickname/', postObj, { responseType: 'text' }).subscribe({
+            next: (retPost) => {
+                this.loadPokemon(postObj.username);
+            },
+            error: (error) => console.error("failed to update pokemon nickname")
         });
 
 

@@ -10,6 +10,12 @@ export interface AddPokemonDto {
 }
 
 
+export interface UpdateLatestNicknameDto {
+  username: string;
+  nickname: string;
+}
+
+
 @Controller()
 export class AppController {
 
@@ -36,19 +42,13 @@ export class AppController {
       throw new BadRequestException('Invalid username provided'); 
     }
 
-
-
-
   }
-
-
 
 
   @Post('add-pokemon')
   addPokemon(@Body() body: AddPokemonDto): void {
 
     try {
-      console.log("got here")
       this.databaseService.addPokemon(body);
     }
     catch (error) {
@@ -58,6 +58,22 @@ export class AppController {
     }
       
   }
+
+
+
+  @Post('update-latest-nickname')
+  updateLatestNickname(@Body() body: UpdateLatestNicknameDto): void {
+
+    try {
+      this.databaseService.updateLatestNickname(body);
+    }
+    catch (error) {
+      console.log(error);
+      throw new BadRequestException('Invalid data provided to update pokemon nickname'); 
+    }
+      
+  }
+
 
 
 }
