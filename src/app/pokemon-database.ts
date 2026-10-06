@@ -76,6 +76,7 @@ export class PokemonDatabase {
 
 
 
+    //converts timezone from UTC (stored as UTC in database) to local time
     toAmPm(timestamp: string) {
         const [datePart, timePart] = timestamp.split(" ");
         const date = new Date(`${datePart}T${timePart}Z`); // Z means UTC

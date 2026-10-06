@@ -1,4 +1,4 @@
-<h1 class="title">Click A Region to Catch:</h1>
+<h2 class="title">Click to Catch:</h2>
 <div class="buttonsRow">
     <button class="genButton" [ngClass]="buttonClasses(1)" type="button" (click)="catchPokemon(1)">Generation I</button>
     <button class="genButton" [ngClass]="buttonClasses(2)" type="button" (click)="catchPokemon(2)">Generation II</button>
@@ -14,7 +14,7 @@
 @if (pokemon(); as pokemon) {
 <div class="mainBody" [style.--content-background-color]="backgroundColor()">
   <div class="contentBody">
-    <h1 class="contentTitle"> Pokemon Caught!</h1>
+    <h2 class="contentTitle"> Pokemon Caught!</h2>
     <h2> {{ pokemon.nickname ? pokemon.nickname : pokemon.displayName }}</h2>
     <img [src]="pokemon.sprites.other?.['official-artwork']?.front_default" />
     <form [formGroup]="applyForm" (submit)="submitForm()">

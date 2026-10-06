@@ -6,26 +6,23 @@ export class PageClickService {
 
     authService = inject(AuthService);
 
-
-
     readonly active = signal(1);
 
 
     constructor() {
         if (!this.authService.isLoggedIn()) {
-            this.active.set(5);
+            this.active.set(4);
         }
         else {
-            this.active.set(2);
+            this.active.set(1);
         }
     }
 
 
 
     handleClick(activeId: number) {
-        console.log("asdfASDASDASDASD");
         if (!this.authService.isLoggedIn()) {
-            this.active.set(5);
+            this.active.set(4);
         }
         else {
             this.active.set(activeId);

@@ -44,8 +44,8 @@ export class UserLogin {
     this.databaseService.loadPokemon(name);
 
     console.log(name);
-    this.pageService.handleClick(2);
-    this.router.navigate(['/search']);
+    this.pageService.handleClick(3);
+    this.router.navigate(['/storage']);
   }
 
 
