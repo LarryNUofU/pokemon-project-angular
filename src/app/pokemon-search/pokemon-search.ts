@@ -7,7 +7,7 @@ import { PokemonDetail } from '../pokemon-detail/pokemon-detail';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
+import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from '../pokemon-model';
 import { PokemonCache } from '../pokemon-cache';
 
 
@@ -109,8 +109,12 @@ private pokemonNamesArr: string[] = [];
         //TODO: check if in cache, otherwise call the API here
           this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + this.pokemonId).subscribe((value) => {
             const pokemon = new PokemonModel(value);
-            this.pokemonDetail()?.setPageDetail(pokemon);
-            console.log(pokemon);
+
+            this.httpClient.get<PokemonSpeciesApiResponse>('https://pokeapi.co/api/v2/pokemon-species/' + this.pokemonId).subscribe((speciesValue) => {
+              pokemon.setFlavorText(speciesValue);
+              this.pokemonDetail()?.setPageDetail(pokemon);
+              console.log(pokemon);
+            });
         });
       }
     });

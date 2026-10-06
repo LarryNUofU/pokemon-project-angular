@@ -24,23 +24,67 @@
     <button
       type="button"
       class="btn btn-outline-primary"
-      (click)="collapse.toggle()"
-      [attr.aria-expanded]="!isCollapsed()"
+      (click)="descriptionCollapse.toggle()"
+      [attr.aria-expanded]="!isDescriptionCollapsed()"
       aria-controls="collapseExample"
     >
       Description
     </button>
   </p>
-  <div #collapse="ngbCollapse" [ngbCollapse]="isCollapsed()" (ngbCollapseChange)="isCollapsed.set($event)">
+  <div #descriptionCollapse="ngbCollapse" [ngbCollapse]="isDescriptionCollapsed()" (ngbCollapseChange)="isDescriptionCollapsed.set($event)">
     <div class="card">
       <div class="card-body">
-        <h3>Height: {{ pokemon.heightInMeters }}m</h3>
-        <h3>Abilities</h3>
+        <p>{{ pokemon.flavorText }}</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="description-button">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="abilitiesCollapse.toggle()"
+      [attr.aria-expanded]="!isAbilitiesCollapsed()"
+      aria-controls="collapseExample"
+    >
+      Abilities
+    </button>
+  </p>
+  <div #abilitiesCollapse="ngbCollapse" [ngbCollapse]="isAbilitiesCollapsed()" (ngbCollapseChange)="isAbilitiesCollapsed.set($event)">
+    <div class="card">
+      <div class="card-body">
+        <h5>Types</h5>
+        <ul>
+          @for (entry of pokemon.types ?? []; track entry.slot) {
+            <li>{{ entry.type.name }}</li>
+          }
+        </ul>
+        <h5>Abilities</h5>
         <ul>
           @for (entry of pokemon.abilities ?? []; track entry.slot) {
             <li>{{ entry.ability.name }}</li>
           }
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="description-button">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="physicalCollapse.toggle()"
+      [attr.aria-expanded]="!isPhysicalCollapsed()"
+      aria-controls="collapseExample"
+    >
+      Physical Stats
+    </button>
+  </p>
+  <div #physicalCollapse="ngbCollapse" [ngbCollapse]="isPhysicalCollapsed()" (ngbCollapseChange)="isPhysicalCollapsed.set($event)">
+    <div class="card">
+      <div class="card-body">
+        <h5>Height: {{ pokemon.heightInMeters }}m</h5>
+        <h5>Weight: {{ pokemon.weightInKg }}kg</h5>
       </div>
     </div>
   </div>

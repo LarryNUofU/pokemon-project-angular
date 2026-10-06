@@ -45,11 +45,32 @@ export interface PokemonType {
     url: string
 }
 
+
+//Species endpoint
+export interface PokemonSpeciesApiResponse {
+	flavor_text_entries: PokemonFlavorTextEntry[];
+}
+
+export interface PokemonFlavorTextEntry {
+	flavor_text: string;
+	language: {
+		name: string;
+		url: string;
+	};
+	version: {
+		name: string;
+		url: string;
+	};
+}
+
+
+
+
 export class PokemonModel {
 	readonly id: number;
 	readonly name: string;
 	readonly heightInMeters: number;
-	readonly weight: number;
+	readonly weightInKg: number;
 	readonly abilities: PokemonAbility[];
 	readonly sprites: PokemonSprites;
     readonly types: PokemonTypes[];
@@ -62,7 +83,7 @@ export class PokemonModel {
 		this.id = response.id;
 		this.name = response.name;
 		this.heightInMeters = this.getHeightInMeters(response.height);
-		this.weight = response.weight;
+		this.weightInKg = response.weight / 10;
 		this.abilities = response.abilities;
 		this.sprites = response.sprites;
         this.types = response.types;
@@ -86,5 +107,12 @@ export class PokemonModel {
         })
         return isGrass;
     }
+
+	setFlavorText(speciesApiResponse: PokemonSpeciesApiResponse) {
+		this.flavorText = speciesApiResponse.flavor_text_entries.filter((val) => {
+			return val.language.name === "en";
+		})[0].flavor_text.replace('\f', ' ');
+		console.log("flavor text: " + this.flavorText);
+	}
 
 }
