@@ -5,9 +5,6 @@ import {afterRenderEffect, Component, computed, inject, signal, viewChild} from 
 import {FormsModule} from '@angular/forms';
 import { PokemonDetail } from '../pokemon-detail/pokemon-detail';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from '../pokemon-model';
 import { PokemonCache } from '../pokemon-cache';
 import { PokemonHttp } from '../pokemon-http';
 
@@ -24,7 +21,6 @@ import { PokemonHttp } from '../pokemon-http';
 
 
 //Can take in a query parameter called "id". If the "id" is valid (by checking in the map), then it wil pass it down to the child to be rendered. Otherwise, it will redirect to the /search/ url without any query params
-
 export class PokemonSearch {
 
   clear() {
@@ -48,20 +44,12 @@ export class PokemonSearch {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
 
-//   private pokemonNames = signal([
-//   'Pikachu',
-//   'Snorlax',
-//   'Charmander',
-// ]);
 
 private pokemonNamesArr: string[] = [];
 
 
 
-  //Angular HTTP service guide: https://angular.dev/guide/http/setup
   pokemonHttpService = inject(PokemonHttp);
-
-
 
 
   private pokemonId: number = -1;
@@ -141,8 +129,6 @@ private pokemonNamesArr: string[] = [];
     this.popupExpanded.set(false);
     this.combobox()?.element.focus();
   }
-
-
 
 
 

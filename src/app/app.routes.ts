@@ -1,15 +1,13 @@
 import { Routes } from '@angular/router';
 import { PokemonSearch } from './pokemon-search/pokemon-search';
 import { UserLogin } from './user-login/user-login';
-import { authGuard, AuthService } from './auth-service';
-import { Home } from './home/home';
+import { authGuard } from './auth-service';
 import { PokemonCatch } from './pokemon-catch/pokemon-catch';
 import { PokemonStorage } from './pokemon-storage/pokemon-storage';
 
 export const routes: Routes = [
 
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: 'home', component: Home,  canActivate: [authGuard]},
+    {path: '', redirectTo: 'search', pathMatch: 'full'},
     {path: 'search', component: PokemonSearch, canActivate: [authGuard]},
     {path: 'catch', component: PokemonCatch, canActivate: [authGuard]},
     {path: 'storage', component: PokemonStorage, canActivate: [authGuard]},

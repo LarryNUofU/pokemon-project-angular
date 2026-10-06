@@ -1,7 +1,5 @@
 import { Component, inject, signal, viewChild } from '@angular/core';
 import { PokemonDatabase } from '../pokemon-database';
-import { HttpClient } from '@angular/common/http';
-import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from '../pokemon-model';
 import { PokemonCollectionDetail } from '../pokemon-collection-detail/pokemon-collection-detail';
 import { PokemonHttp } from '../pokemon-http';
 

@@ -1,13 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import {
-	NgbNavContent,
 	NgbNav,
 	NgbNavItem,
 	NgbNavItemRole,
 	NgbNavLinkButton,
 	NgbNavLinkBase,
-	NgbNavOutlet,
 } from '@ng-bootstrap/ng-bootstrap/nav';
 import { PageClickService } from './page-click-service';
 
@@ -17,12 +15,10 @@ import { PageClickService } from './page-click-service';
     RouterOutlet,
     RouterLink,
     NgbNav,
-    NgbNavContent,
     NgbNavItem,
     NgbNavItemRole,
     NgbNavLinkButton,
     NgbNavLinkBase,
-    NgbNavOutlet,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
