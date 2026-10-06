@@ -13,6 +13,10 @@ export class PokemonCollectionDetail {
 
   pokemon = signal<PokemonModel | null>(null);
 
+  readonly isDescriptionCollapsed = signal(false);
+  readonly isAbilitiesCollapsed = signal(false);
+  readonly isPhysicalCollapsed = signal(false);
+
   readonly isCollapsed = signal(false);
 
  setPageDetail(pokemon: PokemonModel) {

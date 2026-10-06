@@ -1,7 +1,7 @@
 import { Component, inject, signal, viewChild } from '@angular/core';
 import { PokemonDatabase } from '../pokemon-database';
 import { HttpClient } from '@angular/common/http';
-import { PokemonApiResponse, PokemonModel } from '../pokemon-model';
+import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from '../pokemon-model';
 import { PokemonCollectionDetail } from '../pokemon-collection-detail/pokemon-collection-detail';
 
 @Component({
@@ -27,7 +27,10 @@ export class PokemonStorage {
     this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + speciesId).subscribe((value) => {
         const pokemon = new PokemonModel(value);
         pokemon.nickname = pokemonName;
-        this.pokemonCollectionDetail()?.setPageDetail(pokemon);
+         this.httpClient.get<PokemonSpeciesApiResponse>('https://pokeapi.co/api/v2/pokemon-species/' + speciesId).subscribe((speciesValue) => {
+            pokemon.setFlavorText(speciesValue);
+            this.pokemonCollectionDetail()?.setPageDetail(pokemon);
+          });
       });
 
 
