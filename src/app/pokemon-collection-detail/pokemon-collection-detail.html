@@ -11,17 +11,20 @@
     </figure>
   </div>
 
-  <p class="description-button">
-    <button
-      type="button"
-      class="btn btn-outline-primary"
-      (click)="descriptionCollapse.toggle()"
-      [attr.aria-expanded]="!isDescriptionCollapsed()"
-      aria-controls="collapseExample"
-    >
-      Description
-    </button>
-  </p>
+  <div class="descButtonContainer">
+      <p class="description-button">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            (click)="descriptionCollapse.toggle()"
+            [attr.aria-expanded]="!isDescriptionCollapsed()"
+            aria-controls="collapseExample"
+          >
+            Description
+          </button>
+      </p>
+      <a routerLink="/search" [queryParams]="{ id: pokemon.id }">See in Search</a>
+  </div>
   <div #descriptionCollapse="ngbCollapse" [ngbCollapse]="isDescriptionCollapsed()" (ngbCollapseChange)="isDescriptionCollapsed.set($event)">
     <div class="card">
       <div class="card-body">
@@ -80,6 +83,4 @@
     </div>
   </div>
 }
-
-
 
