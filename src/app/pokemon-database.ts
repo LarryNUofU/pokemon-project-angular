@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
+import { PokemonHttp } from './pokemon-http';
 
 
 
@@ -36,42 +37,23 @@ export class PokemonDatabase {
 
     pokemonList = signal<PokemonDatabaseModelApiResponse[]>([]);
 
-    httpClient = inject(HttpClient);
-
-    retPost: string = "";
-
+    pokemonHttpService = inject(PokemonHttp);
 
     loadPokemon(username: string) {
-         this.httpClient.get<PokemonDatabaseModelApiResponse[]>('http://localhost:3000/get-pokemon/' + username).subscribe((value) => {
-                this.pokemonList.set(value);
-        });
+        this.pokemonHttpService.loadPokemonFromDatabase(this.pokemonList, username);
     }
 
 
 
     addPokemon(postObj: PokemonDatabaseModelPost) {
 
-        //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        this.httpClient.post('http://localhost:3000/add-pokemon/', postObj, { responseType: 'text' }).subscribe({
-            next: (retPost) => {
-                console.log("refreshing list");
-                //refresh list
-                this.loadPokemon(postObj.username);
-            },
-            error: (error) => console.error("failed to add pokemon")
-        });
+        this.pokemonHttpService.addPokemonToDatabase(this.pokemonList, postObj);
 
     }
 
 
     updateLatestNickname(postObj: UpdateLatestNicknameDto) {
-
-        this.httpClient.post('http://localhost:3000/update-latest-nickname/', postObj, { responseType: 'text' }).subscribe({
-            next: (retPost) => {
-                this.loadPokemon(postObj.username);
-            },
-            error: (error) => console.error("failed to update pokemon nickname")
-        });
+        this.pokemonHttpService.updateLatestPokemonNameToDatabase(this.pokemonList, postObj);
     }
 
 

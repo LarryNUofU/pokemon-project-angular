@@ -1,7 +1,12 @@
-import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, signal } from '@angular/core';
 import { PokemonModel } from '../pokemon-model';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
+
+export interface PokemonDetailImpl {
+  setPageDetail(pokemon: PokemonModel): void;
+}
+
+
 
 @Component({
   imports: [NgbCollapse],
@@ -9,8 +14,7 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
   styleUrl: './pokemon-detail.css',
   templateUrl: './pokemon-detail.html',
 })
-
-export class PokemonDetail {
+export class PokemonDetail implements PokemonDetailImpl {
 
 
   pokemon = signal<PokemonModel | null>(null);

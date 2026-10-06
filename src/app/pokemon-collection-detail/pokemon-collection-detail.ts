@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
 import { PokemonModel } from '../pokemon-model';
 import { PageClickService } from '../page-click-service';
+import { PokemonDetailImpl } from '../pokemon-detail/pokemon-detail';
 
 @Component({
   imports: [NgbCollapse, RouterLink],
@@ -10,7 +11,7 @@ import { PageClickService } from '../page-click-service';
   styleUrl: './pokemon-collection-detail.css',
   templateUrl: './pokemon-collection-detail.html',
 })
-export class PokemonCollectionDetail {
+export class PokemonCollectionDetail implements PokemonDetailImpl {
 
 
   pokemon = signal<PokemonModel | null>(null);

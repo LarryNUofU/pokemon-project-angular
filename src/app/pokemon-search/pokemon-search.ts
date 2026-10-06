@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from '../pokemon-model';
 import { PokemonCache } from '../pokemon-cache';
+import { PokemonHttp } from '../pokemon-http';
 
 
 @Component({
@@ -58,7 +59,7 @@ private pokemonNamesArr: string[] = [];
 
 
   //Angular HTTP service guide: https://angular.dev/guide/http/setup
-  private httpClient = inject(HttpClient);
+  pokemonHttpService = inject(PokemonHttp);
 
 
 
@@ -84,8 +85,6 @@ private pokemonNamesArr: string[] = [];
       
 
 
-
-
      this.activatedRoute.queryParams.subscribe((params) => {
       this.pokemonId = parseInt(params['id'] || '');
       console.log('pokemon ID:', this.pokemonId);
@@ -95,27 +94,18 @@ private pokemonNamesArr: string[] = [];
           this.pokemonId = -1;
       }
 
-      let validId = false;
+
       if (this.pokemonId == -1) {
           this.router.navigate([], {
             queryParams: {},
             replaceUrl: true // Optional: Replaces the current history entry instead of adding a new one
           });
-          this.pokemonId = -1;
       }
       else {
         //child might not be rendered yet when it gets here after loading in from outside the route or if page is refreshed/URL changed from outside. This case is handled in ngAfterViewInit()
 
         //TODO: check if in cache, otherwise call the API here
-          this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + this.pokemonId).subscribe((value) => {
-            const pokemon = new PokemonModel(value);
-
-            this.httpClient.get<PokemonSpeciesApiResponse>('https://pokeapi.co/api/v2/pokemon-species/' + this.pokemonId).subscribe((speciesValue) => {
-              pokemon.setFlavorText(speciesValue);
-              this.pokemonDetail()?.setPageDetail(pokemon);
-              console.log(pokemon);
-            });
-        });
+        this.loadPokemonDetail();
       }
     });
 
@@ -124,18 +114,17 @@ private pokemonNamesArr: string[] = [];
 
 
   ngAfterViewInit() {
-      
-    if (this.pokemonId != -1) {
-        this.httpClient.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + this.pokemonId).subscribe((value) => {
-        const pokemon = new PokemonModel(value);
-        console.log(pokemon);
-        this.pokemonDetail()?.setPageDetail(pokemon);
-      });
-
-    }
+      this.loadPokemonDetail();
       this.combobox()?.element.focus();
   }
 
+  private loadPokemonDetail() {
+    const detail = this.pokemonDetail();
+    if (this.pokemonId != -1 && detail) {
+        this.pokemonHttpService.updatePokemonDetail(detail, this.pokemonId, "");
+    }   
+
+  }
 
 
   onCommit() {
@@ -143,8 +132,6 @@ private pokemonNamesArr: string[] = [];
     if (selected.length > 0) {
       this.query.set(selected[0]);
       //Only call Pokemon detail to render itself when the user presses enter or finishes clicking an option in the dropdown
-      //probably need to clear out query params
-      //this.pokemonDetail()?.setPageDetail(selected[0]);
       const id = this.pokemonCache.allValidPokemonNameToIdMap.get(selected[0].toLowerCase());
       this.router.navigate([], {
       queryParams: {id},
@@ -160,9 +147,3 @@ private pokemonNamesArr: string[] = [];
 
 
 }
-
-// const ALL_POKEMON = [
-//   'Pikachu',
-//   'Snorlax',
-//   'Charmander'
-// ];
