@@ -4,8 +4,8 @@ import { DatabaseService } from './app.service.js';
 
 export interface AddPokemonDto {
      username: string;
-     speciesId: number | undefined;
-     pokemonName: string | undefined;
+     speciesId: number;
+     pokemonName: string;
      date: string;
 }
 

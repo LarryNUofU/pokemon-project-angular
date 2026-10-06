@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import Database from 'better-sqlite3';
+import { DatabaseSync } from 'node:sqlite';
 import { AddPokemonDto, UpdateLatestNicknameDto } from './app.controller.js';
 
 @Injectable()
 export class DatabaseService {
+  private database = new DatabaseSync('pokemon.db');
 
-
-
-  private database = new Database('pokemon.db');
-
-  
   constructor() {
     this.initializeDatabase();
   }
@@ -65,9 +61,14 @@ export class DatabaseService {
 
 
   addPokemon(addPokemon: AddPokemonDto) {
+    if (typeof addPokemon.speciesId !== 'number' || typeof addPokemon.pokemonName !== 'string') {
+      throw new Error('Invalid pokemon data provided');
+    }
+
     const addPokemonQuery = this.database.prepare(`
       INSERT INTO pokemon (username, speciesId, pokemonName, date)
       VALUES(?, ?, ?, ?)`).run(addPokemon.username, addPokemon.speciesId, addPokemon.pokemonName, addPokemon.date);
+    return addPokemonQuery;
   }
 
 
@@ -82,8 +83,8 @@ export class DatabaseService {
 
 
 
-initializeDatabase() {
-  this.database.pragma('journal_mode = WAL');
+  initializeDatabase() {
+    this.database.exec('PRAGMA journal_mode = WAL');
 
     this.database.exec(`
       CREATE TABLE IF NOT EXISTS users (
@@ -91,7 +92,6 @@ initializeDatabase() {
         username TEXT UNIQUE
       ) STRICT
     `);
-
 
     this.database.exec(`
       CREATE TABLE IF NOT EXISTS pokemon (
@@ -105,8 +105,7 @@ initializeDatabase() {
 
     const query = this.database.prepare('SELECT * FROM users ORDER BY id');
     console.log(query.all());
-
-}
+  }
 
 
 }
