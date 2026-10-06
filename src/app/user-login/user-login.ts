@@ -3,6 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { AuthService } from '../auth-service';
 import { Router } from '@angular/router';
 import { PokemonDatabase } from '../pokemon-database';
+import { PageClickService } from '../page-click-service';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -20,6 +21,8 @@ export class UserLogin {
     authService = inject(AuthService);
     router = inject(Router);
     databaseService = inject(PokemonDatabase);
+
+    pageService = inject(PageClickService);
 
 
 
@@ -41,7 +44,8 @@ export class UserLogin {
     this.databaseService.loadPokemon(name);
 
     console.log(name);
-    this.router.navigate(['/home']);
+    this.pageService.handleClick(2);
+    this.router.navigate(['/search']);
   }
 
 

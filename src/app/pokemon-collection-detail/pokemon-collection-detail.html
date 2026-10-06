@@ -23,7 +23,7 @@
             Description
           </button>
       </p>
-      <a routerLink="/search" [queryParams]="{ id: pokemon.id }">See in Search</a>
+      <a routerLink="/search" (click)="pageService.handleClick(2)" [queryParams]="{ id: pokemon.id }">See in Search</a>
   </div>
   <div #descriptionCollapse="ngbCollapse" [ngbCollapse]="isDescriptionCollapsed()" (ngbCollapseChange)="isDescriptionCollapsed.set($event)">
     <div class="card">

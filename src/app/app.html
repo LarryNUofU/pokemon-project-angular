@@ -1,4 +1,4 @@
-<h1>Pokemon</h1>
+<!-- <h1>Pokemon</h1>
 <nav>
   <a routerLink="home">Home</a> |
   <a routerLink="search">Pokemon Search</a> |
@@ -6,5 +6,28 @@
   <a routerLink="storage">View Your Pokemon</a> |
   <a routerLink="login">Change User</a>
 </nav>
-<router-outlet />
+<router-outlet /> -->
+
+<h1>Pokemon</h1>
+
+<ul ngbNav #nav="ngbNav" [(activeId)]="pageService.active" class="nav-tabs">
+	<li [ngbNavItem]="1" [disabled]="!pageService.authService.isLoggedIn()">
+		<button ngbNavLink  routerLink="home" >Home</button>
+	</li>
+	<li [ngbNavItem]="2" [disabled]="!pageService.authService.isLoggedIn()">
+		<button ngbNavLink  routerLink="search" >Pokemon Search</button>
+	</li>
+	<li [ngbNavItem]="3" [disabled]="!pageService.authService.isLoggedIn()">
+		<button ngbNavLink  routerLink="catch" >Catch Pokemon</button>
+	</li>
+  <li [ngbNavItem]="4" [disabled]="!pageService.authService.isLoggedIn()">
+		<button ngbNavLink  routerLink="storage" >View Your Pokemon</button>
+	</li>
+  <li [ngbNavItem]="5">
+		<button ngbNavLink routerLink="login" >Change User</button>
+	</li>
+</ul>
+
+
+ <router-outlet/>
 

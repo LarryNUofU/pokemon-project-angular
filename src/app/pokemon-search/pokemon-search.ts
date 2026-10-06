@@ -133,10 +133,7 @@ private pokemonNamesArr: string[] = [];
       });
 
     }
-    else {
       this.combobox()?.element.focus();
-    }
-
   }
 
 

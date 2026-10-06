@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
 import { PokemonModel } from '../pokemon-model';
+import { PageClickService } from '../page-click-service';
 
 @Component({
   imports: [NgbCollapse, RouterLink],
@@ -20,9 +21,13 @@ export class PokemonCollectionDetail {
 
   readonly isCollapsed = signal(false);
 
+
+  pageService = inject(PageClickService);
+
  setPageDetail(pokemon: PokemonModel) {
     this.pokemon.set(pokemon);
   }
+
 
 
 
