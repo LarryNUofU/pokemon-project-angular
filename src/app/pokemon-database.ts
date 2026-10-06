@@ -61,10 +61,6 @@ export class PokemonDatabase {
             error: (error) => console.error("failed to add pokemon")
         });
 
-
-
-      
-
     }
 
 
@@ -76,11 +72,26 @@ export class PokemonDatabase {
             },
             error: (error) => console.error("failed to update pokemon nickname")
         });
+    }
 
 
 
-      
+    toAmPm(timestamp: string) {
+        const [datePart, timePart] = timestamp.split(" ");
+        const date = new Date(`${datePart}T${timePart}Z`); // Z means UTC
 
+        const pad = (value: number) => String(value).padStart(2, "0");
+        const localDate =
+            `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+
+        const localTime = date.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+        });
+
+        return `${localDate} ${localTime}`;
     }
 
 

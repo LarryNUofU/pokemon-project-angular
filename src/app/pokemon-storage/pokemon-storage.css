@@ -11,10 +11,9 @@
 }
 
 .pokemon-description {
-  flex: 2;             
+  flex: 1;             
   padding: 15px;
 }
-
 
 .list-group-item.active {
   --bs-list-group-active-bg: #198754;

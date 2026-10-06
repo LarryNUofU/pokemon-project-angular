@@ -9,7 +9,7 @@
     </ul> -->
       <div class="list-group">
       @for (item of databaseService.pokemonList(); track $index) {
-            <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedButton() === $index" (click)="selectedButton.set($index); onSelect(item.speciesId, item.pokemonName); ">{{item.pokemonName}} - Caught at: {{ item.date }}</button>
+            <button type="button" class="list-group-item list-group-item-action" [class.active]="selectedButton() === $index" (click)="selectedButton.set($index); onSelect(item.speciesId, item.pokemonName); ">{{item.pokemonName}} - Caught at: {{ databaseService.toAmPm(item.date) }}</button>
       }
       </div>
 
