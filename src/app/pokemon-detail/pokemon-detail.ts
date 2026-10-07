@@ -6,8 +6,6 @@ export interface PokemonDetailImpl {
   setPageDetail(pokemon: PokemonModel): void;
 }
 
-
-
 @Component({
   imports: [NgbCollapse],
   selector: 'app-pokemon-detail',
@@ -15,20 +13,13 @@ export interface PokemonDetailImpl {
   templateUrl: './pokemon-detail.html',
 })
 export class PokemonDetail implements PokemonDetailImpl {
-
-
   pokemon = signal<PokemonModel | null>(null);
 
   readonly isDescriptionCollapsed = signal(false);
   readonly isAbilitiesCollapsed = signal(false);
   readonly isPhysicalCollapsed = signal(false);
 
-
-
   setPageDetail(pokemon: PokemonModel) {
     this.pokemon.set(pokemon);
   }
-
-
-
 }

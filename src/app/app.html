@@ -1,20 +1,18 @@
 <h2>Pokemon Adventures</h2>
 
 <ul ngbNav #nav="ngbNav" [(activeId)]="pageService.active" class="nav-tabs">
-	<li [ngbNavItem]="1" [disabled]="!pageService.authService.isLoggedIn()">
-		<button ngbNavLink  routerLink="search" >Pokemon Search</button>
-	</li>
-	<li [ngbNavItem]="2" [disabled]="!pageService.authService.isLoggedIn()">
-		<button ngbNavLink  routerLink="catch" >Catch Pokemon</button>
-	</li>
+  <li [ngbNavItem]="1" [disabled]="!pageService.authService.isLoggedIn()">
+    <button ngbNavLink routerLink="search">Pokemon Search</button>
+  </li>
+  <li [ngbNavItem]="2" [disabled]="!pageService.authService.isLoggedIn()">
+    <button ngbNavLink routerLink="catch">Catch Pokemon</button>
+  </li>
   <li [ngbNavItem]="3" [disabled]="!pageService.authService.isLoggedIn()">
-		<button ngbNavLink  routerLink="storage" >View Your Pokemon</button>
-	</li>
+    <button ngbNavLink routerLink="storage">View Your Pokemon</button>
+  </li>
   <li [ngbNavItem]="4">
-		<button ngbNavLink routerLink="login" >Change User</button>
-	</li>
+    <button ngbNavLink routerLink="login">Change User</button>
+  </li>
 </ul>
 
-
- <router-outlet/>
-
+<router-outlet />

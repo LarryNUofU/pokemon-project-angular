@@ -1,22 +1,6 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
 
 
-/* :root {
-  --inter-font: Inter, sans-serif;
-  --hot-pink: #ff1493;
-  --primary-contrast: #df1818;
-  --page-background: #da1d1d;
-  --septenary-contrast: #da1d1d;
-  ----quaternary-contrast: #da1d1d;
-} */
-
-
-
-
-
-
-
-
 :host {
   --inter-font: Inter, sans-serif;
   --hot-pink: #ff1493;

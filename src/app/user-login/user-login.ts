@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth-service';
 import { Router } from '@angular/router';
 import { PokemonDatabase } from '../pokemon-database';
@@ -12,30 +12,17 @@ import { PageClickService } from '../page-click-service';
   templateUrl: './user-login.html',
 })
 export class UserLogin {
-
   applyForm = new FormGroup({
-      username: new FormControl(''),
-    });
+    username: new FormControl(''),
+  });
 
+  authService = inject(AuthService);
+  router = inject(Router);
+  databaseService = inject(PokemonDatabase);
 
-    authService = inject(AuthService);
-    router = inject(Router);
-    databaseService = inject(PokemonDatabase);
+  pageService = inject(PageClickService);
 
-    pageService = inject(PageClickService);
-
-
-
-
-
-
-    constructor() {
-
-    }
-
-
-
-
+  constructor() {}
 
   submitForm() {
     let name = this.applyForm.value.username ?? '';
@@ -43,13 +30,7 @@ export class UserLogin {
 
     this.databaseService.loadPokemon(name);
 
-    console.log(name);
     this.pageService.handleClick(3);
     this.router.navigate(['/storage']);
   }
-
-
-
-
-
 }

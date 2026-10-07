@@ -12,8 +12,6 @@ import { PokemonDetailImpl } from '../pokemon-detail/pokemon-detail';
   templateUrl: './pokemon-collection-detail.html',
 })
 export class PokemonCollectionDetail implements PokemonDetailImpl {
-
-
   pokemon = signal<PokemonModel | null>(null);
 
   readonly isDescriptionCollapsed = signal(false);
@@ -22,14 +20,9 @@ export class PokemonCollectionDetail implements PokemonDetailImpl {
 
   readonly isCollapsed = signal(false);
 
-
   pageService = inject(PageClickService);
 
- setPageDetail(pokemon: PokemonModel) {
+  setPageDetail(pokemon: PokemonModel) {
     this.pokemon.set(pokemon);
   }
-
-
-
-
 }

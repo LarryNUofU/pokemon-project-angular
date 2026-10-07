@@ -6,10 +6,9 @@ import { PokemonCatch } from './pokemon-catch/pokemon-catch';
 import { PokemonStorage } from './pokemon-storage/pokemon-storage';
 
 export const routes: Routes = [
-
-    {path: '', redirectTo: 'search', pathMatch: 'full'},
-    {path: 'search', component: PokemonSearch, canActivate: [authGuard]},
-    {path: 'catch', component: PokemonCatch, canActivate: [authGuard]},
-    {path: 'storage', component: PokemonStorage, canActivate: [authGuard]},
-    {path: 'login', component: UserLogin}
+  { path: '', redirectTo: 'search', pathMatch: 'full' },
+  { path: 'search', component: PokemonSearch, canActivate: [authGuard] },
+  { path: 'catch', component: PokemonCatch, canActivate: [authGuard] },
+  { path: 'storage', component: PokemonStorage, canActivate: [authGuard] },
+  { path: 'login', component: UserLogin },
 ];

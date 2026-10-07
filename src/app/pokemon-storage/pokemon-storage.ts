@@ -11,7 +11,6 @@ import { PokemonCache } from '../pokemon-cache';
   templateUrl: './pokemon-storage.html',
 })
 export class PokemonStorage {
-
   databaseService = inject(PokemonDatabase);
   readonly selectedButton = signal(-1);
   pokemonHttpService = inject(PokemonHttp);
@@ -20,29 +19,16 @@ export class PokemonStorage {
 
   pokemonCollectionDetail = viewChild(PokemonCollectionDetail);
 
-
   onSelect(speciesId: number, pokemonName: string) {
-    console.log("i've been selected: " + speciesId);
-
     const pokemonDetail = this.pokemonCollectionDetail();
 
-
     if (pokemonDetail) {
-        const pokemonModel = this.pokemonCacheService.pokemonCache.get(speciesId);
-        if (pokemonModel) {
-          pokemonDetail.setPageDetail(pokemonModel);
-        }
-        else {
-          this.pokemonHttpService.updatePokemonDetail(pokemonDetail, speciesId, pokemonName);
-        }
+      const pokemonModel = this.pokemonCacheService.pokemonCache.get(speciesId);
+      if (pokemonModel) {
+        pokemonDetail.setPageDetail(pokemonModel);
+      } else {
+        this.pokemonHttpService.updatePokemonDetail(pokemonDetail, speciesId, pokemonName);
+      }
     }
-
   }
-
-
-
-
-
-
-
 }

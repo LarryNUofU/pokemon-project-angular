@@ -1,13 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { PokemonCache } from '../pokemon-cache';
-import { HttpClient } from '@angular/common/http';
 import { PokemonModel } from '../pokemon-model';
 import { PokemonGenerationModel } from '../pokemon-generation-model';
 import { PokemonDatabase, PokemonDatabaseModelPost, UpdateLatestNicknameDto } from '../pokemon-database';
 import { AuthService } from '../auth-service';
 import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
 import { PokemonHttp } from '../pokemon-http';
 
 @Component({
@@ -142,7 +140,7 @@ export class PokemonCatch {
     }
   }
 
-  
+
   submitForm() {
     let name = this.applyForm.value.username ?? '';
 

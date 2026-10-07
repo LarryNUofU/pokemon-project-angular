@@ -10,33 +10,26 @@ export class DatabaseService {
     this.initializeDatabase();
   }
 
-
   addUser(usernameValue: string): boolean {
     const checkUsernameExistsQuery = this.database.prepare(`
       SELECT * FROM users
       WHERE username = ?
       `);
 
+    let queryRes = checkUsernameExistsQuery.get(usernameValue);
 
-      let queryRes = checkUsernameExistsQuery.get(usernameValue);
-
-      if (!queryRes) {
-          try {
-            //add user
-            this.database.prepare('INSERT INTO users (username) VALUES (?)').run(usernameValue);
-          }
-          catch (error) {
-            console.error("could not add user");
-            return false;
-          }
+    if (!queryRes) {
+      try {
+        //add user
+        this.database.prepare('INSERT INTO users (username) VALUES (?)').run(usernameValue);
+      } catch (error) {
+        console.error('could not add user');
+        return false;
       }
+    }
 
-      return true;
-
-
-
+    return true;
   }
-
 
   getPokemon(usernameValue: string) {
     const getPokemonQuery = this.database.prepare(`
@@ -44,31 +37,36 @@ export class DatabaseService {
       WHERE username = ?
       `);
 
-      const pokemonQueryRes = getPokemonQuery.all(usernameValue);
+    const pokemonQueryRes = getPokemonQuery.all(usernameValue);
 
-      return pokemonQueryRes;
+    return pokemonQueryRes;
   }
-
 
   addPokemon(addPokemon: AddPokemonDto) {
     if (typeof addPokemon.speciesId !== 'number' || typeof addPokemon.pokemonName !== 'string') {
       throw new Error('Invalid pokemon data provided');
     }
 
-    const addPokemonQuery = this.database.prepare(`
+    const addPokemonQuery = this.database
+      .prepare(
+        `
       INSERT INTO pokemon (username, speciesId, pokemonName, date)
-      VALUES(?, ?, ?, ?)`).run(addPokemon.username, addPokemon.speciesId, addPokemon.pokemonName, addPokemon.date);
+      VALUES(?, ?, ?, ?)`,
+      )
+      .run(addPokemon.username, addPokemon.speciesId, addPokemon.pokemonName, addPokemon.date);
     return addPokemonQuery;
   }
 
-
   updateLatestNickname(updateNickname: UpdateLatestNicknameDto) {
-     const addPokemonQuery = this.database.prepare(`
+    const addPokemonQuery = this.database
+      .prepare(
+        `
       UPDATE pokemon
       SET pokemonName = ?
-      WHERE id = (SELECT MAX(id) FROM pokemon WHERE username=?)`).run(updateNickname.nickname, updateNickname.username);
+      WHERE id = (SELECT MAX(id) FROM pokemon WHERE username=?)`,
+      )
+      .run(updateNickname.nickname, updateNickname.username);
   }
-
 
   initializeDatabase() {
     this.database.exec('PRAGMA journal_mode = WAL');
@@ -89,8 +87,5 @@ export class DatabaseService {
         date TEXT NOT NULL
       ) STRICT
     `);
-
   }
-
-
 }

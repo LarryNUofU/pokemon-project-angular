@@ -1,8 +1,7 @@
 <div class="autocomplete-container">
   <div #origin class="autocomplete-input-container">
-    <span class="search-icon material-symbols-outlined" translate="no" aria-hidden="true"
-      >search</span>
-    
+    <span class="search-icon material-symbols-outlined" translate="no" aria-hidden="true">search</span>
+
     <input
       #combobox="ngCombobox"
       ngCombobox
@@ -13,24 +12,12 @@
       (click)="popupExpanded.set(true)"
     />
 
-    <button
-      type="button"
-      class="clear-button"
-      aria-label="Clear"
-      (mousedown)="$event.preventDefault()"
-      (click)="clear()"
-    >
-      <span class="clear-icon material-symbols-outlined" translate="no" aria-hidden="true"
-        >close</span
-      >
+    <button type="button" class="clear-button" aria-label="Clear" (mousedown)="$event.preventDefault()" (click)="clear()">
+      <span class="clear-icon material-symbols-outlined" translate="no" aria-hidden="true">close</span>
     </button>
-
   </div>
 
-  <ng-template
-    [cdkConnectedOverlay]="{origin, usePopover: 'inline', matchWidth: true}"
-    [cdkConnectedOverlayOpen]="popupExpanded()"
-  >
+  <ng-template [cdkConnectedOverlay]="{ origin, usePopover: 'inline', matchWidth: true }" [cdkConnectedOverlayOpen]="popupExpanded()">
     <ng-template ngComboboxPopup [combobox]="combobox">
       <div class="popup">
         @if (pokemonList().length === 0) {
@@ -49,14 +36,11 @@
           (click)="onCommit()"
           (keydown.enter)="onCommit()"
         >
-
-         <!-- TODO    make it track not "pokemon" but "pokemon.id" or something unique -->
+          <!-- TODO    make it track not "pokemon" but "pokemon.id" or something unique -->
           @for (pokemon of pokemonList(); track pokemon) {
             <div class="option" ngOption [value]="pokemon" [label]="pokemon">
               <span class="option-label">{{ pokemon }}</span>
-              <span class="check-icon material-symbols-outlined" translate="no" aria-hidden="true"
-                >check</span
-              >
+              <span class="check-icon material-symbols-outlined" translate="no" aria-hidden="true">check</span>
             </div>
           }
         </div>

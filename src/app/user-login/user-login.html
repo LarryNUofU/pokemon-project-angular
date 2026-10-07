@@ -1,6 +1,6 @@
-<h4 class="topElement">Current User: {{ this.authService.getCurrentUsername()}}</h4>
+<h4 class="topElement">Current User: {{ this.authService.getCurrentUsername() }}</h4>
 <form [formGroup]="applyForm" (submit)="submitForm()">
-          <label for="first-name">Username:</label>
-          <input id="first-name" type="text" formControlName="username" />
-          <button type="submit" class="primary">Change User</button>
+  <label for="first-name">Username:</label>
+  <input id="first-name" type="text" formControlName="username" />
+  <button type="submit" class="primary">Change User</button>
 </form>
