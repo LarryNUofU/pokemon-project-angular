@@ -2,6 +2,7 @@ import { Component, inject, signal, viewChild } from '@angular/core';
 import { PokemonDatabase } from '../pokemon-database';
 import { PokemonCollectionDetail } from '../pokemon-collection-detail/pokemon-collection-detail';
 import { PokemonHttp } from '../pokemon-http';
+import { PokemonCache } from '../pokemon-cache';
 
 @Component({
   imports: [PokemonCollectionDetail],
@@ -15,6 +16,7 @@ export class PokemonStorage {
   readonly selectedButton = signal(-1);
   pokemonHttpService = inject(PokemonHttp);
 
+  pokemonCacheService = inject(PokemonCache);
 
   pokemonCollectionDetail = viewChild(PokemonCollectionDetail);
 
@@ -24,9 +26,17 @@ export class PokemonStorage {
 
     const pokemonDetail = this.pokemonCollectionDetail();
 
+
     if (pokemonDetail) {
-        this.pokemonHttpService.updatePokemonDetail(pokemonDetail, speciesId, pokemonName);
+        const pokemonModel = this.pokemonCacheService.pokemonCache.get(speciesId);
+        if (pokemonModel) {
+          pokemonDetail.setPageDetail(pokemonModel);
+        }
+        else {
+          this.pokemonHttpService.updatePokemonDetail(pokemonDetail, speciesId, pokemonName);
+        }
     }
+
   }
 
 

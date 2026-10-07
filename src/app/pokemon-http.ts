@@ -3,12 +3,15 @@ import { inject, Service, WritableSignal } from '@angular/core';
 import { PokemonDetailImpl } from './pokemon-detail/pokemon-detail';
 import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from './pokemon-model';
 import { PokemonDatabaseModelApiResponse, PokemonDatabaseModelPost, UpdateLatestNicknameDto } from './pokemon-database';
+import { PokemonCache } from './pokemon-cache';
 
 @Service()
 export class PokemonHttp {
 
 
     angularHttpService = inject(HttpClient);
+    pokemonCacheService = inject(PokemonCache);
+
 
     updatePokemonDetail(pokemonDetail: PokemonDetailImpl, pokemonId: number, pokemonNickname: string) {
         console.log("inside pokemonhttp service");
@@ -17,6 +20,7 @@ export class PokemonHttp {
                 pokemon.nickname = pokemonNickname;
                  this.angularHttpService.get<PokemonSpeciesApiResponse>('https://pokeapi.co/api/v2/pokemon-species/' + pokemonId).subscribe((speciesValue) => {
                     pokemon.setFlavorText(speciesValue);
+                    this.pokemonCacheService.pokemonCache.set(pokemonId, pokemon);
                     pokemonDetail.setPageDetail(pokemon);
                   });
               });

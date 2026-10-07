@@ -36,7 +36,7 @@ export class PokemonSearch {
   selectedOption = signal<string[]>([]);
 
 
-  pokemonCache = inject(PokemonCache);
+  pokemonCacheService = inject(PokemonCache);
 
   pokemonDetail = viewChild(PokemonDetail);
 
@@ -67,7 +67,7 @@ private pokemonNamesArr: string[] = [];
 
 
 
-      this.pokemonNamesArr = [...this.pokemonCache.allValidPokemonNameToIdMap.keys()].sort().map((val) => {
+      this.pokemonNamesArr = [...this.pokemonCacheService.allValidPokemonNameToIdMap.keys()].sort().map((val) => {
         return val.charAt(0).toUpperCase() + val.slice(1);
       });
       
@@ -77,7 +77,7 @@ private pokemonNamesArr: string[] = [];
       this.pokemonId = parseInt(params['id'] || '');
       console.log('pokemon ID:', this.pokemonId);
 
-      if (!this.pokemonCache.checkIfValidId(this.pokemonId)) {
+      if (!this.pokemonCacheService.checkIfValidId(this.pokemonId)) {
           console.log("not valid id:" + this.pokemonId);
           this.pokemonId = -1;
       }
@@ -109,7 +109,14 @@ private pokemonNamesArr: string[] = [];
   private loadPokemonDetail() {
     const detail = this.pokemonDetail();
     if (this.pokemonId != -1 && detail) {
-        this.pokemonHttpService.updatePokemonDetail(detail, this.pokemonId, "");
+        const pokemonModel = this.pokemonCacheService.pokemonCache.get(this.pokemonId);
+        if (pokemonModel) {
+            console.log("in the cache!!!!");
+            detail.setPageDetail(pokemonModel);
+        }
+        else {
+            this.pokemonHttpService.updatePokemonDetail(detail, this.pokemonId, "");
+        }
     }   
 
   }
@@ -120,7 +127,7 @@ private pokemonNamesArr: string[] = [];
     if (selected.length > 0) {
       this.query.set(selected[0]);
       //Only call Pokemon detail to render itself when the user presses enter or finishes clicking an option in the dropdown
-      const id = this.pokemonCache.allValidPokemonNameToIdMap.get(selected[0].toLowerCase());
+      const id = this.pokemonCacheService.allValidPokemonNameToIdMap.get(selected[0].toLowerCase());
       this.router.navigate([], {
       queryParams: {id},
       queryParamsHandling: 'merge', // Preserve other query parameters
