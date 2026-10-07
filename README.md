@@ -49,3 +49,7 @@ This starts the frontend and backend together. Stop both services with `Ctrl+C`.
 
 
 The Angular development server is available at [http://localhost:4200](http://localhost:4200).
+
+Diagram of overall architure (some things have changed/updated from the diagram, but mostly intact):
+<img width="2492" height="1452" alt="Pokemon Project drawio (1)" src="https://github.com/user-attachments/assets/24214d48-8f6a-48b8-9281-a8c2af8a8c50" />
+
