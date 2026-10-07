@@ -51,7 +51,7 @@
   color: var(--quaternary-contrast);
 }
 .autocomplete-input {
-  width: 13rem;
+  width: 14rem;
   font-size: 1rem;
   border-radius: 0.25rem;
   padding: 0.75rem 2.5rem 0.75rem 2.5rem;
