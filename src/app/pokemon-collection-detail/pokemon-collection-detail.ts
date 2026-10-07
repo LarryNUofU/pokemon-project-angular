@@ -22,8 +22,11 @@ export class PokemonCollectionDetail implements PokemonDetailImpl {
 
   pageService = inject(PageClickService);
 
+  pokemonNickname = signal<string | null>(null);
+
+
   setPageDetail(pokemon: PokemonModel, nickname: string) {
-    pokemon.nickname = nickname;
+    this.pokemonNickname.set(nickname);
     this.pokemon.set(pokemon);
   }
 }

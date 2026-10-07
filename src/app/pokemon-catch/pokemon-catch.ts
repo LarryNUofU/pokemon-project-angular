@@ -22,6 +22,9 @@ export class PokemonCatch {
 
   pokemon = signal<PokemonModel | null>(null);
 
+
+  pokemonNickname = signal<string | null>(null);
+
   selectedGeneration = signal<number | null>(null);
 
   private getIdFromUrl(url: string): number {
@@ -34,6 +37,7 @@ export class PokemonCatch {
   });
 
   async catchPokemon(id: number): Promise<void> {
+    
     this.selectedGeneration.set(id);
 
     //check if generation object is in cache
@@ -58,6 +62,7 @@ export class PokemonCatch {
     }
 
     this.pokemon.set(pokemonModel);
+    this.pokemonNickname.set(pokemonModel.displayName);
     //Add pokemon
     if (this.pokemon()) {
       this.addPokemonToDatabase(pokemonModel, this.databaseService, this.authService);
@@ -149,10 +154,7 @@ export class PokemonCatch {
 
     this.databaseService.updateLatestNickname(postObj);
 
-    const pokemon = this.pokemon();
-    if (pokemon) {
-      pokemon.nickname = name;
-    }
+    this.pokemonNickname.set(name);
 
     this.applyForm.reset();
   }

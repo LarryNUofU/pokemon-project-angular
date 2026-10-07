@@ -15,7 +15,7 @@
   <div class="mainBody" [style.--content-background-color]="backgroundColor()">
     <div class="contentBody">
       <h2 class="contentTitle">Pokemon Caught!</h2>
-      <h2>{{ pokemon.nickname ? pokemon.nickname : pokemon.displayName }}</h2>
+      <h2>{{ this.pokemonNickname() ? this.pokemonNickname() : pokemon.displayName }}</h2>
       <img [src]="pokemon.sprites.other?.['official-artwork']?.front_default" />
       <form [formGroup]="applyForm" (submit)="submitForm()">
         <label for="first-name">Change Nickname?</label>

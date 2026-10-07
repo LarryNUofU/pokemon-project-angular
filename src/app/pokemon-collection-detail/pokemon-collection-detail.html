@@ -1,6 +1,6 @@
 @if (pokemon(); as pokemon) {
   <div class="title">
-    <h2>{{ pokemon.nickname ? pokemon.nickname : pokemon.displayName }}</h2>
+    <h2>{{ this.pokemonNickname() ? this.pokemonNickname() : pokemon.displayName }}</h2>
   </div>
   <div class="artwork-gallery">
     <figure>
