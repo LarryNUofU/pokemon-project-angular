@@ -3,6 +3,8 @@
 Allows users to catch pokemon, view their collection, and search for other pokemon using a search bar.
 Can switch between different users with a specific username.
 
+Uses only https://pokeapi.co/ for information and images.
+
 
 This repository contains the Pokemon Project frontend and its `pokemon-db` backend.
 
