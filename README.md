@@ -1,59 +1,49 @@
-# PokemonProject
+# Pokemon Adventures
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.2.
+Allows users to catch pokemon, view their collection, and search for other pokemon using a search bar.
+Can switch between different users with a specific username.
 
-## Development server
 
-To start a local development server, run:
+This repository contains the Pokemon Project frontend and its `pokemon-db` backend.
 
-```bash
-ng serve
-```
+## Getting started
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Run the following commands from the repository root. You need Node.js and npm installed.
 
-## Code scaffolding
+http://localhost:3000 is required to be open (backend). Backend creates a database file in the pokemon-db folder.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+http://localhost:4200 is required to be open (frontend)
 
-```bash
-ng generate component component-name
-```
+Choose the command that matches what you want to do:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Install dependencies only
+
+Use this when you want to set up the project now and start it later:
 
 ```bash
-ng generate --help
+npm run devInstall
 ```
 
-## Building
+This installs dependencies for both the frontend and backend (folder located in `pokemon-db`).
 
-To build the project run:
+### Install dependencies and start the app
 
 ```bash
-ng build
+npm run devInstallAndStart
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+This installs dependencies for both projects, then starts the frontend and backend.
 
-## Running unit tests
+### Start the app after setup
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Use this when dependencies are already installed:
 
 ```bash
-ng test
+npm run dev
 ```
 
-## Running end-to-end tests
+This starts the frontend and backend together. Stop both services with `Ctrl+C`.
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The Angular development server is available at [http://localhost:4200](http://localhost:4200).
