@@ -29,7 +29,7 @@ export class PokemonCache {
 
     private readonly MAX_POKEMON_ID = 1026;
 
-    private readonly generationMapToIdList: Map<string, number[]> = new Map();
+    readonly generationMapToIdList: Map<number, number[]> = new Map();
 
 
 
@@ -65,7 +65,7 @@ export class PokemonCache {
     }
 
 
-    addToGenerationMap(key: string, value: number[]): void {
+    addToGenerationMap(key: number, value: number[]): void {
         this.generationMapToIdList.set(key, value);
         console.log(this.generationMapToIdList);
     }

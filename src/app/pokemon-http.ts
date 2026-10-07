@@ -4,6 +4,8 @@ import { PokemonDetailImpl } from './pokemon-detail/pokemon-detail';
 import { PokemonApiResponse, PokemonModel, PokemonSpeciesApiResponse } from './pokemon-model';
 import { PokemonDatabaseModelApiResponse, PokemonDatabaseModelPost, UpdateLatestNicknameDto } from './pokemon-database';
 import { PokemonCache } from './pokemon-cache';
+import { firstValueFrom } from 'rxjs';
+import { PokemonGenerationApiResponse, PokemonGenerationModel } from './pokemon-generation-model';
 
 @Service()
 export class PokemonHttp {
@@ -24,6 +26,31 @@ export class PokemonHttp {
                     pokemonDetail.setPageDetail(pokemon);
                   });
               });
+    }
+
+
+
+
+    async getPokemonModelAsync(id: number): Promise<PokemonModel> {
+
+        const pokemonApiResponse: PokemonApiResponse = await firstValueFrom(this.angularHttpService.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + id));
+
+        const speciesApiResponse: PokemonSpeciesApiResponse = await firstValueFrom(this.angularHttpService.get<PokemonSpeciesApiResponse>('https://pokeapi.co/api/v2/pokemon-species/' + id));
+
+        const pokemonModel = new PokemonModel(pokemonApiResponse);
+        pokemonModel.setFlavorText(speciesApiResponse);
+
+        this.pokemonCacheService.pokemonCache.set(id, pokemonModel);
+       
+        return pokemonModel;
+    }
+
+
+
+    async getGenerationModelAsync(generationId: number): Promise<PokemonGenerationModel> {
+        const pokemonGenerationApiResponse: PokemonGenerationApiResponse = await firstValueFrom(this.angularHttpService.get<PokemonGenerationApiResponse>('https://pokeapi.co/api/v2/generation/' + generationId));
+        const generationModel = new PokemonGenerationModel(pokemonGenerationApiResponse);
+        return generationModel;
     }
 
 
