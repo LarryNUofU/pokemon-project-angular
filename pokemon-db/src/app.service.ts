@@ -11,14 +11,6 @@ export class DatabaseService {
   }
 
 
-
-
-
-  getHello(): string {
-    return 'Hello World!!!!!!!';
-  }
-
-
   addUser(usernameValue: string): boolean {
     const checkUsernameExistsQuery = this.database.prepare(`
       SELECT * FROM users
@@ -31,9 +23,7 @@ export class DatabaseService {
       if (!queryRes) {
           try {
             //add user
-            const addUserRes = this.database
-            .prepare('INSERT INTO users (username) VALUES (?)')
-            .run(usernameValue);
+            this.database.prepare('INSERT INTO users (username) VALUES (?)').run(usernameValue);
           }
           catch (error) {
             console.error("could not add user");
@@ -80,9 +70,6 @@ export class DatabaseService {
   }
 
 
-
-
-
   initializeDatabase() {
     this.database.exec('PRAGMA journal_mode = WAL');
 
@@ -103,8 +90,6 @@ export class DatabaseService {
       ) STRICT
     `);
 
-    const query = this.database.prepare('SELECT * FROM users ORDER BY id');
-    console.log(query.all());
   }
 
 
