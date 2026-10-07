@@ -40,7 +40,6 @@ export class PokemonCatch {
     const genListCache = this.pokemonCacheService.generationMapToIdList.get(id);
     let idArr: number[] = [];
     if (id && genListCache) {
-      console.log('generation is in cache');
       idArr = genListCache;
     } else {
       const pokemonGeneration = await this.pokemonHttpService.getGenerationModelAsync(id);
@@ -53,7 +52,6 @@ export class PokemonCatch {
     const pokemonModelCache = this.pokemonCacheService.pokemonCache.get(chosenId);
     let pokemonModel = null;
     if (pokemonModelCache) {
-      console.log('pokemon is in cache - generation');
       pokemonModel = pokemonModelCache;
     } else {
       pokemonModel = await this.pokemonHttpService.getPokemonModelAsync(chosenId);
