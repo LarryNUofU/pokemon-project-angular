@@ -16,11 +16,10 @@ export class PokemonHttp {
     console.log('inside pokemonhttp service');
     this.angularHttpService.get<PokemonApiResponse>('https://pokeapi.co/api/v2/pokemon/' + pokemonId).subscribe((value) => {
       const pokemon = new PokemonModel(value);
-      pokemon.nickname = pokemonNickname;
       this.angularHttpService.get<PokemonSpeciesApiResponse>('https://pokeapi.co/api/v2/pokemon-species/' + pokemonId).subscribe((speciesValue) => {
         pokemon.setFlavorText(speciesValue);
         this.pokemonCacheService.pokemonCache.set(pokemonId, pokemon);
-        pokemonDetail.setPageDetail(pokemon);
+        pokemonDetail.setPageDetail(pokemon, pokemonNickname);
       });
     });
   }

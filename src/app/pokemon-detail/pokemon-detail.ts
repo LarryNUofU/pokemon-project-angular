@@ -3,7 +3,7 @@ import { PokemonModel } from '../pokemon-model';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
 
 export interface PokemonDetailImpl {
-  setPageDetail(pokemon: PokemonModel): void;
+  setPageDetail(pokemon: PokemonModel, nickname: string): void;
 }
 
 @Component({

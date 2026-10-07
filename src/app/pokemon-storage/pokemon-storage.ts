@@ -25,7 +25,7 @@ export class PokemonStorage {
     if (pokemonDetail) {
       const pokemonModel = this.pokemonCacheService.pokemonCache.get(speciesId);
       if (pokemonModel) {
-        pokemonDetail.setPageDetail(pokemonModel);
+        pokemonDetail.setPageDetail(pokemonModel, pokemonName);
       } else {
         this.pokemonHttpService.updatePokemonDetail(pokemonDetail, speciesId, pokemonName);
       }
